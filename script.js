@@ -3,24 +3,33 @@ let secondOperator = 0
 let operation = ""
 let displayText = "0"
 
-let numberButtons = document.querySelectorAll(".numberButton");
-let operationButtons = document.querySelectorAll(".operationButton");
-let commaButton = document.querySelector(".commaButton");
-let processButton = document.querySelector(".processButton");
-let clearButton = document.querySelector(".clearButton");
+let numberButtons = document.querySelectorAll(".numberButton")
+let operationButtons = document.querySelectorAll(".operationButton")
+let commaButton = document.querySelector(".commaButton")
+let processButton = document.querySelector(".processButton")
+let clearButton = document.querySelector(".clearButton")
+let backspaceButton = document.querySelector(".backspaceButton")
 let display = document.querySelector("#display")
 
 
 numberButtons.forEach((button) => {
     button.addEventListener("click", addNumberToDisplay)
-  });
+  })
 
 operationButtons.forEach((button) => {
     button.addEventListener("click", addOperation)
-});
+})
 
 processButton.addEventListener("click", operate)
 clearButton.addEventListener("click", clear)
+backspaceButton.addEventListener("click", removeLast)
+
+function removeLast(e){
+    if(displayText != "0"){
+        displayText = displayText.slice(0, -1); 
+    }
+}
+
 
 function addNumberToDisplay(e){
     if(displayText == "0"){
@@ -61,22 +70,22 @@ function operate(){
                 operation = ""
                 displayText = "0"
                 return
-                break;
+                break
             }   
-            result =  (firstOperator / secondOperator).toString();         
-            break;
+            result =  (firstOperator / secondOperator).toString()         
+            break
 
         case "*":            
-            result =  (firstOperator * secondOperator).toString();
-            break;
+            result =  (firstOperator * secondOperator).toString()
+            break
 
         case "-":            
-            result =  (firstOperator - secondOperator).toString();            
-            break;
+            result =  (firstOperator - secondOperator).toString()            
+            break
 
         case "+":            
-            result =  (firstOperator + secondOperator).toString();
-            break;
+            result =  (firstOperator + secondOperator).toString()
+            break
         default:
             return
     }
