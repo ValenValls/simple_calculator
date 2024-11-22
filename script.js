@@ -2,6 +2,7 @@ let firstOperator = 0
 let secondOperator = 0
 let operation = ""
 let displayText = "0"
+let numberWithComma = false
 
 let numberButtons = document.querySelectorAll(".numberButton")
 let operationButtons = document.querySelectorAll(".operationButton")
@@ -23,11 +24,26 @@ operationButtons.forEach((button) => {
 processButton.addEventListener("click", operate)
 clearButton.addEventListener("click", clear)
 backspaceButton.addEventListener("click", removeLast)
+commaButton.addEventListener("click", addComma)
 
+
+function addComma(e){
+    if (not(numberWithComma)){
+        numberWithComma = true
+        displayText = displayText.concat(",") 
+    }
+}
 function removeLast(e){
     if(displayText != "0"){
         displayText = displayText.slice(0, -1); 
     }
+}
+
+function turnDisplayTextToNumber(){
+    if (numberWithComma){
+        return parseFloat(displayText)
+    }
+    return parseInt(displayText)
 }
 
 
@@ -47,10 +63,10 @@ function addOperation(e){
     }
     else{       
         if( firstOperator == 0){
-            firstOperator = parseInt(displayText)
+            firstOperator = turnDisplayTextToNumber()
         }
         else{
-            secondOperator = parseInt(displayText)
+            secondOperator = turnDisplayTextToNumber()
         }
         
         displayText = "0"
@@ -60,7 +76,7 @@ function addOperation(e){
 }
 
 function operate(){
-    secondOperator = parseInt(displayText)
+    secondOperator = turnDisplayTextToNumber()
     switch (operation) {
         case "/":                      
             if(secondOperator == 0){
@@ -69,8 +85,7 @@ function operate(){
                 secondOperator = 0
                 operation = ""
                 displayText = "0"
-                return
-                break
+                return                
             }   
             result =  (firstOperator / secondOperator).toString()         
             break
@@ -93,6 +108,7 @@ function operate(){
     firstOperator = parseInt(result)
     displayText = "0"
     operation = ""
+    numberWithComma = false
 }
 
 
@@ -102,4 +118,5 @@ function clear(){
     operation = ""
     displayText = "0"
     display.textContent = displayText
+    numberWithComma = false
 }
